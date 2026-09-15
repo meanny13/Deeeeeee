@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+<title>Yoneko Store - Main Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FFF0F5;
+    --cream: #FFFFFF;
+    --pink: #FFAADA;
+    --pink-soft: #FFF0F5;
+    --pink-dark: #E288B9;
+    --mint: #A7E6FF;
+    --mint-soft: #EAF8FF;
+    --butter: #FFF5BF;
+    --text-main: #5C525A;
+    --text-soft: #9A8F97;
+    --white: #FFFFFF;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background: #FFF0F5;
+    font-family: 'Sarabun', sans-serif;
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+
+  /* shop logo + name */
+  .outer-shop-header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin-bottom: 24px;
+    width: 100%;
+    max-width: 375px;
+  }
+  .logo-slot{
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2px solid #FFAADA;
+    box-shadow: 0 4px 12px rgba(255, 170, 218, 0.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    cursor:pointer;
+    flex-shrink: 0;
+  }
+  .logo-slot img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    display:block;
+  }
+  .logo-slot.has-image img{ display:block; }
+  .logo-slot.has-image .logo-placeholder{ display:none; }
+  .logo-slot .logo-placeholder{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+    color: var(--text-soft);
+  }
+  .logo-slot .logo-placeholder svg{ width:20px; height:20px; }
+  .logo-slot .logo-placeholder span{
+    font-family:'Mali', sans-serif;
+    font-size: 8.5px;
+    font-weight:600;
+  }
+  #logoInput{ display:none; }
+
+  .shop-title-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .shop-name{
+    font-family:'Mali', sans-serif;
+    font-weight:700;
+    font-size: 26px;
+    color: #5C525A;
+    text-align:left;
+    letter-spacing: 0.5px;
+    position: relative;
+    line-height: 1.1;
+  }
+  .shop-name::after{
+    content: "🐾";
+    font-size: 16px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  .payment-subtitle{
+    font-family:'Mali', sans-serif;
+    font-weight:600;
+    font-size: 15px;
+    color: #E288B9;
+    margin-top: 2px;
+  }
+
+  /* contact text */
+  .contact-title-text{
+    font-family: 'Mali', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #E288B9;
+    margin-top: 20px;
+    margin-bottom: -16px;
+    text-align: center;
+  }
+  .thank-you-text{
+    font-family: 'Mali', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #5C525A;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  /* contact circles */
+  .outer-contact-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .contact-circle{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s ease;
+    border: 2px solid #FFFFFF;
+  }
+  .contact-circle:hover{ transform: translateY(-2px); }
+  .contact-circle svg{ width:20px; height:20px; }
+  .contact-circle.facebook{ background: #A7E6FF; }
+  .contact-circle.line{ background: #FFAADA; }
+
+  /* iPhone 11 mockup (Minimal Pastel) */
+  .phone-frame{
+    position: relative;
+    width: 375px;
+    max-width: 92vw;
+    height: 812px;
+    background: #FFFFFF;
+    border-radius: 44px;
+    padding: 10px;
+    box-shadow: 0 20px 40px rgba(255, 170, 218, 0.15);
+    border: 1px solid #FFE4F0;
+  }
+  .phone-frame::before{
+    content:"";
+    position:absolute;
+    inset: 4px;
+    border-radius: 40px;
+    border: 1px solid rgba(0,0,0,0.02);
+    pointer-events:none;
+  }
+  
+  /* iPhone 11 Notch */
+  .iphone-11-notch{
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 170px;
+    height: 26px;
+    background: #FFFFFF;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+  .iphone-11-notch::before{
+    content: "";
+    width: 40px;
+    height: 4px;
+    background: #FFE4F0;
+    border-radius: 2px;
+  }
+  .iphone-11-notch::after{
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #FFAADA;
+    border-radius: 50%;
+  }
+
+  /* --- iPhone 11 Status Bar Header --- */
+  .status-bar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 32px;
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 15;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Sarabun", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #5C525A;
+  }
+
+  .status-left {
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+  }
+
+  .status-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-right: 2px;
+  }
+
+  .status-icon {
+    width: 13px;
+    height: 13px;
+    fill: #5C525A;
+  }
+
+  .battery-box {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .battery-icon {
+    width: 18px;
+    height: 9px;
+    border: 1px solid #5C525A;
+    border-radius: 2.5px;
+    padding: 1px;
+    position: relative;
+  }
+  .battery-level {
+    width: 75%;
+    height: 100%;
+    background-color: #5C525A;
+    border-radius: 1px;
+  }
+  .battery-icon::after {
+    content: "";
+    position: absolute;
+    right: -3px;
+    top: 2px;
+    width: 1.5px;
+    height: 3px;
+    background-color: #5C525A;
+    border-radius: 0 1px 1px 0;
+  }
+
+  /* --- Vinyl Music Player Button --- */
+  .vinyl-btn-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 2px;
+  }
+
+  .vinyl-record {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #E288B9 20%, #FFAADA 21%, #5C525A 22%, #3A3338 100%);
+    border: 1.5px solid #FFFFFF;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    position: relative;
+  }
+
+  .vinyl-record::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background: #FFFFFF;
+    border-radius: 50%;
+  }
+
+  .vinyl-record:hover {
+    transform: scale(1.1);
+  }
+
+  .vinyl-record.playing {
+    animation: spin 3s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .music-dot {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 6px;
+    height: 6px;
+    background-color: #A7E6FF;
+    border: 1px solid #FFFFFF;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .vinyl-record.playing .music-dot {
+    opacity: 1;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.7; }
+  }
+
+  .side-btn{ position:absolute; background: #FFE4F0; }
+  .side-btn.mute{ left:-3px; top: 115px; width:3px; height: 26px; border-radius: 2px 0 0 2px; }
+  .side-btn.vol-up{ left:-3px; top: 160px; width:3px; height: 50px; border-radius: 2px 0 0 2px; }
+  .side-btn.vol-down{ left:-3px; top: 225px; width:3px; height: 50px; border-radius: 2px 0 0 2px; }
+  .side-btn.power{ right:-3px; top: 170px; width:3px; height: 75px; border-radius: 0 2px 2px 0; }
+
+  .phone-screen{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 34px;
+    background: #FFFDF9;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    display:flex;
+    justify-content:center;
+    padding: 46px 14px 20px;
+  }
+  .phone-screen::-webkit-scrollbar{ display:none; }
+
+  @media (max-width: 380px){
+    .phone-frame{ width: 92vw; border-radius: 40px; padding: 8px; height: 740px; }
+    .phone-screen{ border-radius: 30px; padding-top: 42px; }
+    .iphone-11-notch{ width: 150px; height: 22px; }
+  }
+
+  .stickers{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .sticker{
+    position: absolute;
+    opacity: 0.7;
+  }
+
+  .card{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 18px 16px;
+    box-shadow: 0 10px 25px rgba(255, 170, 218, 0.1);
+    border: 1px solid #FFE4F0;
+  }
+
+  /* highlight text */
+  .highlight-text{
+    text-align: center;
+    margin: 0 0 16px;
+    font-family:'Mali', sans-serif;
+    font-weight:700;
+    font-size: 14.5px;
+    color: #5C525A;
+    line-height: 1.4;
+  }
+  .highlight-text .pink-name{
+    color: #E288B9;
+  }
+  .highlight-text .sub-note{
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #9A8F97;
+    margin-top: 3px;
+  }
+
+  /* photo slot */
+  .photo-slot{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 220px;
+    margin: 0 auto 16px;
+    border-radius: 20px;
+    background: #FFF0F5;
+    border: 2px dashed #FFAADA;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    overflow:hidden;
+    cursor:pointer;
+  }
+  .photo-slot img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    display:block;
+  }
+  .photo-slot.has-image img{ display:block; }
+  .photo-slot.has-image .placeholder{ display:none; }
+  .photo-slot .placeholder{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    color: #E288B9;
+  }
+  .photo-slot .placeholder svg{ width:42px; height:42px; }
+  .photo-slot .placeholder span{
+    font-family:'Mali', sans-serif;
+    font-size: 12.5px;
+    font-weight:600;
+  }
+  .photo-slot .dims{
+    font-size: 10.5px;
+    color: #9A8F97;
+  }
+  #fileInput{ display:none; }
+
+  /* section title */
+  .section-title{
+    font-family:'Mali', sans-serif;
+    font-weight:600;
+    font-size: 14px;
+    color: #5C525A;
+    margin: 4px 0 14px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .section-title svg{ width:16px; height:16px; }
+
+  /* --- App Menu Grid & Cards (Modern App Look) --- */
+  .menu-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+
+  .menu-card{
+    background: linear-gradient(145deg, #FFFFFF, #FFF7FC);
+    border-radius: 22px;
+    padding: 16px 12px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: 1px solid rgba(255, 228, 240, 0.8);
+    box-shadow: 0 8px 16px rgba(226, 136, 185, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 22px 22px 0 0;
+    pointer-events: none;
+  }
+  .menu-card:hover{
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 22px rgba(226, 136, 185, 0.18);
+  }
+
+  .menu-icon-box{
+    width: 52px;
+    height: 52px;
+    border-radius: 16px; /* iOS App Icon Shape */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    position: relative;
+  }
+  .menu-icon-box svg{
+    width: 26px;
+    height: 26px;
+  }
+
+  /* App Icon Color Themes */
+  .menu-card.store .menu-icon-box{ background: linear-gradient(135deg, #EAF8FF, #CBEFFF); }
+  .menu-card.checkq .menu-icon-box{ background: linear-gradient(135deg, #FFF0F5, #FFD6EC); }
+  .menu-card.points .menu-icon-box{ background: linear-gradient(135deg, #FFF9D6, #FFE28A); }
+  .menu-card.review .menu-icon-box{ background: linear-gradient(135deg, #FFEAF4, #FFBEE0); }
+
+  .menu-title{
+    font-family: 'Mali', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #5C525A;
+    margin-bottom: 2px;
+  }
+  .menu-subtitle{
+    font-size: 10.5px;
+    color: #9A8F97;
+    font-family: 'Sarabun', sans-serif;
+  }
+
+  /* warning */
+  .warning{
+    display:flex;
+    align-items:flex-start;
+    gap:6px;
+    justify-content:center;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #FFAADA;
+  }
+  .warning svg{ width:12px; height:12px; flex-shrink:0; margin-top:1px; }
+  .warning p{
+    font-size: 10.5px;
+    color: #9A8F97;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 380px){
+    .card{ padding: 16px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ส่วนหัวร้านค้า -->
+<div class="outer-shop-header">
+  <label class="logo-slot has-image" id="logoSlot" for="logoInput">
+    <img id="logoPreview" src="ไม่มีชื่อ 113_20260320180353.png" alt="โลโก้ร้าน" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="logo-placeholder" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 8l2-4h12l2 4" stroke="#E288B9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="3" y="8" width="18" height="12" rx="3" stroke="#E288B9" stroke-width="1.6"/>
+        <circle cx="12" cy="14" r="3.2" stroke="#E288B9" stroke-width="1.6"/>
+      </svg>
+      <span>โลโก้ร้าน</span>
+    </div>
+  </label>
+  <input type="file" id="logoInput" accept="image/*">
+  <div class="shop-title-container">
+    <h2 class="shop-name">Yoneko Store</h2>
+    <span class="payment-subtitle">Main Menu</span>
+  </div>
+</div>
+
+<!-- iPhone 11 Mockup -->
+<div class="phone-frame">
+  <!-- iPhone 11 Notch -->
+  <div class="iphone-11-notch"></div>
+
+  <!-- Status Bar ด้านบนหน้าจอ -->
+  <div class="status-bar">
+    <div class="status-left">
+      <span id="currentTime">9:41</span>
+    </div>
+    <div class="status-right">
+      <!-- ปุ่มแผ่นเสียงเปิด/ปิดเพลง -->
+      <div class="vinyl-btn-container" id="vinylBtn" title="เปิด/ปิด เพลง">
+        <div class="vinyl-record" id="vinylRecord">
+          <div class="music-dot"></div>
+        </div>
+      </div>
+      
+      <!-- สัญญาณมือถือ -->
+      <svg class="status-icon" viewBox="0 0 24 24">
+        <path d="M2 22h20V2L2 22z"/>
+      </svg>
+      
+      <!-- Wi-Fi -->
+      <svg class="status-icon" viewBox="0 0 24 24">
+        <path d="M12 3C7.05 3 2.59 5 0 8.23L12 22 24 8.25C21.41 5 16.95 3 12 3z"/>
+      </svg>
+      
+      <!-- แบตเตอรี่ -->
+      <div class="battery-box">
+        <span>85%</span>
+        <div class="battery-icon">
+          <div class="battery-level"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ไฟล์เพลง (.mp3) -->
+  <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+  <div class="side-btn mute"></div>
+  <div class="side-btn vol-up"></div>
+  <div class="side-btn vol-down"></div>
+  <div class="side-btn power"></div>
+
+  <div class="phone-screen">
+
+<div class="stickers">
+  <!-- cat 1 -->
+  <svg class="sticker" style="top:6%; left:4%; width:52px; transform:rotate(-12deg);" viewBox="0 0 100 100">
+    <ellipse cx="50" cy="60" rx="32" ry="28" fill="#FFAADA"/>
+    <path d="M22 38 L30 12 L44 34 Z" fill="#FFAADA"/>
+    <path d="M78 38 L70 12 L56 34 Z" fill="#FFAADA"/>
+    <path d="M25 36 L31 20 L40 34 Z" fill="#FFF0F5"/>
+    <path d="M75 36 L69 20 L60 34 Z" fill="#FFF0F5"/>
+    <circle cx="38" cy="58" r="4" fill="#5C525A"/>
+    <circle cx="62" cy="58" r="4" fill="#5C525A"/>
+    <path d="M45 68 Q50 72 55 68" stroke="#5C525A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <circle cx="26" cy="66" r="5" fill="#A7E6FF" opacity="0.8"/>
+    <circle cx="74" cy="66" r="5" fill="#A7E6FF" opacity="0.8"/>
+  </svg>
+
+  <!-- cat 2 -->
+  <svg class="sticker" style="bottom:8%; right:5%; width:58px; transform:rotate(10deg);" viewBox="0 0 100 100">
+    <ellipse cx="50" cy="62" rx="30" ry="26" fill="#A7E6FF"/>
+    <path d="M24 40 L32 16 L46 36 Z" fill="#A7E6FF"/>
+    <path d="M76 40 L68 16 L54 36 Z" fill="#A7E6FF"/>
+    <circle cx="40" cy="60" r="3.5" fill="#5C525A"/>
+    <circle cx="60" cy="60" r="3.5" fill="#5C525A"/>
+    <path d="M47 70 Q50 73 53 70" stroke="#5C525A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  </svg>
+
+  <!-- star -->
+  <svg class="sticker" style="top:16%; right:10%; width:20px;" viewBox="0 0 24 24">
+    <path d="M12 2 L14.5 9 L22 9.5 L16 14.5 L18 22 L12 17.5 L6 22 L8 14.5 L2 9.5 L9.5 9 Z" fill="#FFF5BF"/>
+  </svg>
+
+  <!-- heart -->
+  <svg class="sticker" style="top:32%; left:6%; width:18px; transform:rotate(-15deg);" viewBox="0 0 24 24">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FFAADA"/>
+  </svg>
+</div>
+
+<div class="card">
+
+  <!-- รูปภาพแบนเนอร์/ภาพโปรโมตหน้าแอป -->
+  <label class="photo-slot has-image" id="photoSlot" for="fileInput">
+    <img id="photoPreview" src="yone_20260915150512.png" alt="รูปหน้าร้าน" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="placeholder" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="5" width="18" height="15" rx="3" stroke="#E288B9" stroke-width="1.6"/>
+        <circle cx="8.5" cy="10" r="1.6" fill="#E288B9"/>
+        <path d="M3 17 L9 12 L13 15 L17 10.5 L21 14.5" stroke="#E288B9" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>แตะเพื่อใส่รูปโปรโมต</span>
+      <span class="dims">2000 × 2000 px</span>
+    </div>
+  </label>
+  <input type="file" id="fileInput" accept="image/*">
+
+  <p class="highlight-text">
+    ยินดีต้อนรับสู่ <span class="pink-name">Yoneko Store</span>
+    <span class="sub-note">เลือกบริการที่ต้องการด้านล่างได้เลยน้า ✨</span>
+  </p>
+
+  <div class="section-title">
+    <svg viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="3" width="7" height="7" rx="2" stroke="#FFAADA" stroke-width="1.6"/>
+      <rect x="14" y="3" width="7" height="7" rx="2" stroke="#FFAADA" stroke-width="1.6"/>
+      <rect x="14" y="14" width="7" height="7" rx="2" stroke="#FFAADA" stroke-width="1.6"/>
+      <rect x="3" y="14" width="7" height="7" rx="2" stroke="#FFAADA" stroke-width="1.6"/>
+    </svg>
+    เมนูบริการ
+  </div>
+
+  <!-- App Menu Grid (App-Style) -->
+  <div class="menu-grid">
+    
+    <!-- 1. Store / ร้านค้า -->
+    <a href="#" class="menu-card store">
+      <div class="menu-icon-box">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 9l1-5h16l1 5" stroke="#38B6FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3 9v11a1 1 0 001 1h16a1 1 0 001-1V9" stroke="#38B6FF" stroke-width="2"/>
+          <path d="M9 21V12h6v9" stroke="#38B6FF" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="menu-title">Store</span>
+      <span class="menu-subtitle">เลือกชมสินค้า/บริการ</span>
+    </a>
+
+    <!-- 2. Check Q -->
+    <a href="#" class="menu-card checkq">
+      <div class="menu-icon-box">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="16" rx="2" stroke="#E288B9" stroke-width="2"/>
+          <path d="M16 2v4M8 2v4M3 10h18" stroke="#E288B9" stroke-width="2" stroke-linecap="round"/>
+          <path d="M9 14l2 2 4-4" stroke="#E288B9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="menu-title">Check Q</span>
+      <span class="menu-subtitle">ตรวจสอบคิวงาน</span>
+    </a>
+
+    <!-- 3. สะสมแต้ม -->
+    <a href="#" class="menu-card points">
+      <div class="menu-icon-box">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l2.4 7.4H22l-6 4.5 2.3 7.1-6.3-4.6-6.3 4.6 2.3-7.1-6-4.5h7.6L12 2z" stroke="#E5A800" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="menu-title">สะสมแต้ม</span>
+      <span class="menu-subtitle">แลกของรางวัล</span>
+    </a>
+
+    <!-- 4. รีวิว -->
+    <a href="#" class="menu-card review">
+      <div class="menu-icon-box">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="#E288B9" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M12 11h.01M9 11h.01M15 11h.01" stroke="#E288B9" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="menu-title">รีวิว</span>
+      <span class="menu-subtitle">รีวิวจากลูกค้า</span>
+    </a>
+
+  </div>
+
+  <div class="warning">
+    <svg viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9.5" stroke="#E288B9" stroke-width="1.5"/>
+      <line x1="12" y1="8" x2="12" y2="13" stroke="#E288B9" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="12" cy="16" r="0.9" fill="#E288B9"/>
+    </svg>
+    <p>กดปุ่มเมนูเพื่อไปยังหน้าบริการต่างๆ ได้ทันที</p>
+  </div>
+
+</div>
+
+  </div>
+</div>
+
+<!-- ช่องทางการติดต่อ -->
+<div class="contact-title-text">Contact us</div>
+<div class="outer-contact-row">
+  <a class="contact-circle facebook" href="https://www.facebook.com/peony.butter.2024?" target="_blank" aria-label="Facebook" title="Facebook">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M15 8.5h2V5.4c-.35-.05-1.54-.15-2.94-.15-2.9 0-4.9 1.77-4.9 5.02V13H6.5v3.5H9.16V23h3.6v-6.5h2.78l.44-3.5h-3.22v-2.36c0-1.01.28-1.7 1.74-1.7Z" fill="#ffffff"/></svg>
+  </a>
+  <a class="contact-circle line" href="https://lin.ee/pYtzazs" target="_blank" aria-label="LINE" title="LINE">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 4C7 4 3 7.2 3 11.2c0 3.4 3.1 6.2 7.2 6.9-.3 1.1-.3 1.2-.3 1.7 0 .3.1.4.4.4.3 0 1-.4 2.1-1.2 1.1-.8 2-1.6 2.4-2C18 15.8 21 13.8 21 11.2 21 7.2 17 4 12 4Z" fill="#ffffff"/></svg>
+  </a>
+</div>
+<div class="thank-you-text">ขอบคุณที่ใช้บริการ Yoneko 💖</div>
+
+<script>
+  // อัปเดตเวลาบนหน้าจอโทรศัพท์แบบ Realtime
+  function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    document.getElementById('currentTime').textContent = hours + ':' + minutes;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // logo upload preview
+  const logoInput = document.getElementById('logoInput');
+  const logoSlot = document.getElementById('logoSlot');
+  const logoPreview = document.getElementById('logoPreview');
+
+  logoInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      logoPreview.style.display = 'block';
+      logoPreview.src = ev.target.result;
+      logoSlot.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // photo upload preview
+  const fileInput = document.getElementById('fileInput');
+  const photoSlot = document.getElementById('photoSlot');
+  const photoPreview = document.getElementById('photoPreview');
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      photoPreview.style.display = 'block';
+      photoPreview.src = ev.target.result;
+      photoSlot.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Music Player Toggle Function
+  const vinylBtn = document.getElementById('vinylBtn');
+  const vinylRecord = document.getElementById('vinylRecord');
+  const bgMusic = document.getElementById('bgMusic');
+
+  vinylBtn.addEventListener('click', () => {
+    if (bgMusic.paused) {
+      bgMusic.play().then(() => {
+        vinylRecord.classList.add('playing');
+      }).catch(err => {
+        console.log("Audio play error: ", err);
+      });
+    } else {
+      bgMusic.pause();
+      vinylRecord.classList.remove('playing');
+    }
+  });
+</script>
+
+</body>
+</html>
